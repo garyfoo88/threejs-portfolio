@@ -23,59 +23,74 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    showAlert({
+      show: true,
+      text: "I didn't receive your message 😢. You may contact me directly at garyfoo88@gmail.com 😃",
+      type: "danger",
+    });
     setCurrentAnimation("hit");
 
-    emailjs
-      .send(
-        "service_0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0",
-        "template_0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0",
-        {
-          from_name: form.name,
-          to_name: "Gary Foo",
-          from_email: form.email,
-          to_email: "garyfoo88@gmail.com",
-          message: form.message,
-        },
-        "user_0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0"
-      )
-      .then(() => {
-        setLoading(false);
-        showAlert({
-          show: true,
-          text: "Thank you for your message 😃",
-          type: "success",
-        });
-
-        setTimeout(() => {
-          hideAlert(false);
-          setCurrentAnimation("idle");
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
-        }, [3000]);
-      })
-      .catch(() => {
-        setLoading(false);
-        setCurrentAnimation("idle");
-
-        setTimeout(() => {
-          hideAlert(false);
-          setCurrentAnimation("idle");
-          setForm({
-            name: "",
-            email: "",
-            message: "",
-          });
-        }, [3000]);
-        showAlert({
-          show: true,
-          text: "I didn't receive your message 😢. You may contact me directly at garyfoo88@gmail.com 😃",
-          type: "danger",
-        });
+    setTimeout(() => {
+      hideAlert(false);
+      setCurrentAnimation("idle");
+      setForm({
+        name: "",
+        email: "",
+        message: "",
       });
+    }, 10000);
+
+    // Disable email API to prevent abuse
+    // emailjs
+    //   .send(
+    //     "service_0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0",
+    //     "template_0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0",
+    //     {
+    //       from_name: form.name,
+    //       to_name: "Gary Foo",
+    //       from_email: form.email,
+    //       to_email: "garyfoo88@gmail.com",
+    //       message: form.message,
+    //     },
+    //     "user_0Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0"
+    //   )
+    //   .then(() => {
+    //     setLoading(false);
+    //     showAlert({
+    //       show: true,
+    //       text: "Thank you for your message 😃",
+    //       type: "success",
+    //     });
+
+    //     setTimeout(() => {
+    //       hideAlert(false);
+    //       setCurrentAnimation("idle");
+    //       setForm({
+    //         name: "",
+    //         email: "",
+    //         message: "",
+    //       });
+    //     }, [3000]);
+    //   })
+    //   .catch(() => {
+    //     setLoading(false);
+    //     setCurrentAnimation("idle");
+
+    //     setTimeout(() => {
+    //       hideAlert(false);
+    //       setCurrentAnimation("idle");
+    //       setForm({
+    //         name: "",
+    //         email: "",
+    //         message: "",
+    //       });
+    //     }, [3000]);
+    //     showAlert({
+    //       show: true,
+    //       text: "I didn't receive your message 😢. You may contact me directly at garyfoo88@gmail.com 😃",
+    //       type: "danger",
+    //     });
+    //   });
   };
 
   return (
