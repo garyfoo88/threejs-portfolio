@@ -3,7 +3,10 @@ import { useGLTF } from "@react-three/drei";
 import { a } from "@react-spring/three";
 import islandScene from "../assets/3d/island.glb";
 import { useFrame, useThree } from "@react-three/fiber";
+import { useSnapshot } from "valtio";
+import state from "../store";
 const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
+  useSnapshot(state);
   const islandRef = useRef();
 
   // Get access to three js renderer and viewport
@@ -48,9 +51,11 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowLeft") {
+      state.isLeftKeyDown = true;
       if (!isRotating) setIsRotating(true);
       islandRef.current.rotation.y += 0.01 * Math.PI;
     } else if (e.key === "ArrowRight") {
+      state.isLeftKeyDown = false;
       if (!isRotating) setIsRotating(true);
       islandRef.current.rotation.y -= 0.01 * Math.PI;
     }
@@ -78,16 +83,16 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 
       // Set the current stage based on the island's orientation
       switch (true) {
-        case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
+        case normalizedRotation >= 5.45 && normalizedRotation <= 6.55:
           setCurrentStage(4);
           break;
-        case normalizedRotation >= 0.85 && normalizedRotation <= 1.3:
+        case normalizedRotation >= 0 && normalizedRotation <= 2.39:
           setCurrentStage(3);
           break;
-        case normalizedRotation >= 2.4 && normalizedRotation <= 2.6:
+        case normalizedRotation >= 2.4 && normalizedRotation <= 3.24:
           setCurrentStage(2);
           break;
-        case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
+        case normalizedRotation >= 3.25 && normalizedRotation <= 5.44:
           setCurrentStage(1);
           break;
         default:
